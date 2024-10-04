@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    width: 80%; /* ou outra largura desejada, como 600px */
+    max-width: 800px; /* opcional, para limitar a largura máxima */
+    margin: 0 auto; /* centraliza o container */
+    padding: 20px; /* adicione um pouco de espaçamento interno */
+}
+
+
+h1 {
+    text-align: center;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.anotacao {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.anotacao h3 {
+    margin: 0 0 10px 0;
+}
+
+.anotacao small {
+    color: #777;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+button.delete {
+    background-color: red; /* Cor de fundo vermelha */
+    color: white; /* Texto branco */
+}
+
+button.delete:hover {
+    background-color: darkred; /* Cor mais escura ao passar o mouse */
+}
+
+#pagination {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    margin-top: 20px; /* Adiciona um espaçamento acima da div de paginação */
+}
+
+#pagination button {
+    background-color: #007bff; /* Cor de fundo azul */
+    color: white; /* Texto branco */
+    border: none; /* Remove bordas */
+    padding: 10px 15px; /* Espaçamento interno */
+    border-radius: 5px; /* Cantos arredondados */
+    margin: 0 5px; /* Espaçamento entre os botões */
+    cursor: pointer; /* Muda o cursor para mãozinha */
+}
+
+#pagination button:hover {
+    background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Gerenciador de Anotações</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciador de Anotações</h1>
+        <label for="titulo">Título</label>
+        <input type="text" id="titulo" placeholder="Digite o título da nota" required>
+        
+        <label for="conteudo">Conteúdo</label>
+        <textarea id="conteudo" placeholder="Digite o conteúdo da nota" required></textarea>
+        
+        <button id="salvar">Salvar Nota</button>
+        <button id="exportar">Exportar Notas</button>
+        
+        <label for="filtro">Filtrar</label>
+        <input type="text" id="filtro" placeholder="Filtrar..." oninput="filtrarNotas()">
+        
+        <div id="anotacoes"></div>
+    </div>
+
+
+    <div id="pagination">
+        <button id="prev" onclick="changePage(-1)" disabled>Anterior</button>
+        <span id="page-info"></span>
+        <button id="next" onclick="changePage(1)">Próximo</button>
+    </div>
+    
+</body>
+</html>
