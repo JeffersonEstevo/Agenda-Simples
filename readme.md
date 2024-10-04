@@ -33,7 +33,7 @@ O projeto é estruturado em três componentes principais:
 ## Instalação
 
 1. Clone este repositório:
-   `git clonehttps://github.com/JeffersonEstevo/Agenda-Simples.git`  
+   `git clone https://github.com/JeffersonEstevo/Agenda-Simples.git`  
 
 2. Navegue até a pasta do projeto:
    `cd gerenciador-anotacoes`
