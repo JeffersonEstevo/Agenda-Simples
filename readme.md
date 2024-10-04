@@ -71,5 +71,5 @@ Este projeto está licenciado sob a MIT License - veja o arquivo LICENSE para de
 ## Contato
 Para dúvidas ou sugestões, entre em contato comigo:
 
-Email: seu-email@example.com
-GitHub: seu-usuario
+Email: jefferson.estevo@gmail.com
+GitHub: JeffersonEstevo
