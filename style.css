@@ -1,95 +1,125 @@
+/* Define a fonte padrão do corpo e configura a cor de fundo */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+    font-family: Arial, sans-serif; /* Fonte utilizada no corpo da página */
+    background-color: #f4f4f4; /* Cor de fundo clara */
+    margin: 0; /* Remove margens externas */
+    padding: 20px; /* Adiciona espaçamento interno ao redor do corpo */
 }
 
+/* Estiliza o container principal */
 .container {
-    width: 80%; /* ou outra largura desejada, como 600px */
-    max-width: 800px; /* opcional, para limitar a largura máxima */
-    margin: 0 auto; /* centraliza o container */
-    padding: 20px; /* adicione um pouco de espaçamento interno */
+    width: 80%; /* Largura do container como 80% da tela */
+    max-width: 800px; /* Largura máxima do container */
+    margin: 0 auto; /* Centraliza o container na tela */
+    padding: 20px; /* Adiciona espaçamento interno ao container */
 }
 
-
+/* Estilo para o título */
 h1 {
-    text-align: center;
+    text-align: center; /* Centraliza o texto do título */
 }
 
+/* Estiliza os campos de entrada e a área de texto */
 input[type="text"],
 textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    width: 100%; /* Largura total do campo */
+    padding: 10px; /* Adiciona espaçamento interno ao campo */
+    margin: 10px 0; /* Adiciona margens verticais entre os campos */
+    border: 1px solid #ddd; /* Borda leve cinza */
+    border-radius: 5px; /* Cantos arredondados da borda */
 }
 
+/* Estilo padrão para botões */
 button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #28a745; /* Cor de fundo verde */
+    color: white; /* Cor do texto em branco */
+    border: none; /* Remove bordas padrão dos botões */
+    padding: 10px 15px; /* Adiciona espaçamento interno ao botão */
+    border-radius: 5px; /* Cantos arredondados do botão */
+    cursor: pointer; /* Altera o cursor para mão ao passar sobre o botão */
 }
 
+/* Efeito de hover para botões */
 button:hover {
-    background-color: #218838;
+    background-color: #218838; /* Cor de fundo mais escura ao passar o mouse */
 }
 
+/* Estilo para cada anotação (nota) */
 .anotacao {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
+    border: 1px solid #ddd; /* Borda leve cinza em torno da anotação */
+    padding: 10px; /* Espaçamento interno para as anotações */
+    margin: 10px 0; /* Margens verticais entre as anotações */
+    border-radius: 5px; /* Cantos arredondados das anotações */
 }
 
+/* Estilo para o título dentro de uma anotação */
 .anotacao h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px 0; /* Margem inferior do título */
 }
 
+/* Estilo para a data dentro de uma anotação */
 .anotacao small {
-    color: #777;
+    color: #777; /* Cor cinza para a data */
 }
 
+/* Estilo geral para botões (duplicado, pode ser removido) */
 button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    padding: 10px; /* Espaçamento interno para todos os botões */
+    border: none; /* Remove bordas */
+    border-radius: 5px; /* Cantos arredondados */
+    cursor: pointer; /* Muda o cursor para mãozinha */
 }
 
+/* Efeito de hover para botões (duplicado, pode ser removido) */
 button:hover {
-    opacity: 0.8;
+    opacity: 0.8; /* Reduz a opacidade ao passar o mouse */
 }
 
+/* Estilo específico para botões de delete */
 button.delete {
     background-color: red; /* Cor de fundo vermelha */
-    color: white; /* Texto branco */
+    color: white; /* Texto em branco */
 }
 
+/* Efeito de hover para botões de delete */
 button.delete:hover {
     background-color: darkred; /* Cor mais escura ao passar o mouse */
 }
 
+/* Estilo para a seção de paginação */
 #pagination {
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    margin-top: 20px; /* Adiciona um espaçamento acima da div de paginação */
+    display: flex; /* Usa flexbox para layout */
+    justify-content: center; /* Centraliza os botões de paginação */
+    margin-top: 20px; /* Adiciona espaço acima da seção de paginação */
 }
 
+/* Estilo para botões de paginação */
 #pagination button {
     background-color: #007bff; /* Cor de fundo azul */
-    color: white; /* Texto branco */
+    color: white; /* Texto em branco */
     border: none; /* Remove bordas */
-    padding: 10px 15px; /* Espaçamento interno */
-    border-radius: 5px; /* Cantos arredondados */
-    margin: 0 5px; /* Espaçamento entre os botões */
+    padding: 10px 15px; /* Adiciona espaçamento interno ao botão */
+    border-radius: 5px; /* Cantos arredondados do botão */
+    margin: 0 5px; /* Margem entre os botões */
     cursor: pointer; /* Muda o cursor para mãozinha */
 }
 
+/* Efeito de hover para botões de paginação */
 #pagination button:hover {
     background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+}
+
+/* Estilo específico para o botão de exportar notas */
+#exportar {
+    background-color: #343a40; /* Cor de fundo cinza escuro */
+    color: white; /* Texto em branco */
+    border: none; /* Remove bordas */
+    padding: 10px 15px; /* Adiciona espaçamento interno ao botão */
+    border-radius: 5px; /* Cantos arredondados do botão */
+    cursor: pointer; /* Muda o cursor para mãozinha */
+}
+
+/* Efeito de hover para o botão de exportar */
+#exportar:hover {
+    background-color: #23272b; /* Cor mais escura ao passar o mouse */
 }
