@@ -45,28 +45,38 @@ function displayNotas(notasParaMostrar = notas) {  // Permite que notas a serem 
 
 // Função para adicionar uma nova nota
 function adicionarNota() {
-    const titulo = document.getElementById('titulo').value;  // Obtém o título da nota do campo de entrada
-    const conteudo = document.getElementById('conteudo').value;  // Obtém o conteúdo da nota do campo de entrada
-    const data = new Date().toLocaleString('pt-BR');  // Obtém a data atual formatada
+    const titulo = document.getElementById('titulo').value; // Obtém o título
+    const conteudo = document.getElementById('conteudo').value; // Obtém o conteúdo
+    const data = new Date().toLocaleString('pt-BR'); // Obtém a data atual
 
-    // Verifica se título e conteúdo foram preenchidos
-    if (titulo && conteudo) {
-        const novaNota = { titulo, conteudo, data };  // Cria um objeto com a nova nota
-        fetch('http://localhost:8000/notas', {  // Faz uma requisição POST para salvar a nova nota
-            method: 'POST',  // Define o método da requisição como POST
-            headers: { 'Content-Type': 'application/json' },  // Define o tipo de conteúdo como JSON
-            body: JSON.stringify(novaNota)  // Envia a nova nota como JSON no corpo da requisição
+    if (titulo && conteudo) { // Verifica se os campos estão preenchidos
+        const novaNota = { titulo, conteudo, data }; // Cria a nova nota
+        console.log('Salvando nota:', novaNota); // Log para depuração
+
+        fetch('http://localhost:8000/notas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(novaNota) // Envia a nova nota como JSON
+        })
+        .then(response => {
+            if (!response.ok) { // Verifica se a resposta é ok
+                throw new Error('Erro na requisição: ' + response.statusText);
+            }
+            return response.text(); // Pode ser alterado para response.json() se necessário
         })
         .then(() => {
-            loadNotas();  // Recarrega as notas após adicionar a nova
-            document.getElementById('titulo').value = '';  // Limpa o campo de título
-            document.getElementById('conteudo').value = '';  // Limpa o campo de conteúdo
+            loadNotas(); // Recarrega as notas
+            document.getElementById('titulo').value = ''; // Limpa o campo de título
+            document.getElementById('conteudo').value = ''; // Limpa o campo de conteúdo
         })
-        .catch(error => console.error('Erro ao salvar nota:', error));  // Captura e exibe erros no console
+        .catch(error => console.error('Erro ao salvar nota:', error)); // Log de erro
     } else {
-        alert("Por favor, preencha todos os campos.");  // Alerta o usuário se os campos não forem preenchidos
+        alert("Por favor, preencha todos os campos."); // Alerta se campos estão vazios
     }
 }
+
 
 // Função para filtrar notas
 function filtrarNotas() {
@@ -131,9 +141,26 @@ function apagarNota(index) {
     }
 }
 
+function exportarNotas() {
+    const jsonNotas = JSON.stringify(notasFiltradas.length > 0 ? notasFiltradas : notas, null, 2); // Converte as notas para JSON
+    const blob = new Blob([jsonNotas], { type: 'application/json' }); // Cria um Blob com o conteúdo JSON
+    const url = URL.createObjectURL(blob); // Cria um URL para o Blob
+    
+    const a = document.createElement('a'); // Cria um elemento <a>
+    a.href = url; // Define o href como o URL do Blob
+    a.download = 'notas.json'; // Define o nome do arquivo a ser baixado
+    document.body.appendChild(a); // Adiciona o <a> ao corpo do documento
+    a.click(); // Simula o clique no <a> para iniciar o download
+    document.body.removeChild(a); // Remove o <a> do corpo
+    URL.revokeObjectURL(url); // Libera o URL criado
+}
+
+
 // Adiciona eventos aos botões
 document.getElementById('salvar').addEventListener('click', adicionarNota);  // Adiciona um evento de clique ao botão de salvar
 document.getElementById('filtro').addEventListener('input', filtrarNotas);  // Adiciona um evento de entrada ao campo de filtro
+document.getElementById('exportar').addEventListener('click', exportarNotas);  // Adiciona um evento para exportar as notas para o arquivi JSON
+
 
 // Carrega notas ao iniciar a página
 loadNotas();  // Chama a função para carregar notas assim que a página é carregada
