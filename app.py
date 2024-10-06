@@ -1,4 +1,7 @@
 import json  # Importa a biblioteca json para manipulação de dados em formato JSON
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from datetime import datetime
+
 from http.server import BaseHTTPRequestHandler, HTTPServer  # Importa as classes necessárias para criar um servidor HTTP
 
 class RequestHandler(BaseHTTPRequestHandler):  # Define a classe RequestHandler que herda de BaseHTTPRequestHandler
@@ -72,11 +75,51 @@ class RequestHandler(BaseHTTPRequestHandler):  # Define a classe RequestHandler 
             self.end_headers()  # Finaliza os cabeçalhos da resposta
     
     def do_OPTIONS(self):
-            self.send_response(200)  # Responde com status 200 (OK)
-            self.send_header('Access-Control-Allow-Origin', '*')  # Permite acesso de qualquer origem
-            self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')  # Métodos permitidos
-            self.send_header('Access-Control-Allow-Headers', 'Content-Type')  # Cabeçalhos permitidos
-            self.end_headers()  # Finaliza os cabeçalhos da resposta
+        self.send_response(200)  # Envia resposta 200 (OK)
+        self.send_header('Access-Control-Allow-Origin', '*')  # Permite qualquer origem
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')  # Métodos permitidos
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')  # Cabeçalhos permitidos
+        self.end_headers()  # Finaliza cabeçalhos
+
+    def do_PUT(self):
+        if self.path == '/notas':  # Verifica se o caminho é '/notas'
+            try:
+                content_length = int(self.headers['Content-Length'])  # Obtém comprimento do conteúdo
+                post_data = self.rfile.read(content_length).decode('utf-8')  # Lê dados da requisição
+                data = json.loads(post_data)  # Converte JSON para dicionário
+
+                index = int(data.get('index', -1))  # Obtém índice da nota
+                nota_editada = data.get('nota', {})  # Obtém nova nota
+
+                with open('notas.json', 'r', encoding='utf-8') as file:  # Lê notas do arquivo
+                    notas = json.load(file)
+
+                if 0 <= index < len(notas):  # Verifica se índice é válido
+                    nota_editada['id'] = notas[index]['id']  # Adiciona ID da nota existente
+                    nota_editada['data'] = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")  # Adiciona data atual
+
+                    notas[index] = nota_editada  # Atualiza nota no índice
+
+                    with open('notas.json', 'w', encoding='utf-8') as file:  # Escreve notas atualizadas no arquivo
+                        json.dump(notas, file, ensure_ascii=False, indent=4)
+
+                    self.send_response(200)  # Envia resposta 200 (OK)
+                    self.send_header('Content-Type', 'application/json')  # Define tipo de conteúdo como JSON
+                    self.end_headers()  # Finaliza cabeçalhos
+                    self.wfile.write(json.dumps({"message": "Nota editada com sucesso!"}).encode('utf-8'))  # Envia mensagem de sucesso
+                else:
+                    self.send_response(404)  # Envia resposta 404 (Não encontrado)
+                    self.end_headers()
+            except Exception as e:
+                self.send_response(500)  # Envia resposta 500 (Erro interno)
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": str(e)}).encode('utf-8'))  # Envia mensagem de erro
+        else:
+            self.send_response(404)  # Envia resposta 404 (Não encontrado)
+            self.end_headers()
+        
+        #print("Dados recebidos:", post_data)  # Adicione esta linha
+
 
 def run(server_class=HTTPServer, handler_class=RequestHandler):  # Função para iniciar o servidor
     server_address = ('', 8000)  # Define o endereço e a porta do servidor
