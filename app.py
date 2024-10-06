@@ -2,8 +2,6 @@ import json  # Importa a biblioteca json para manipulação de dados em formato 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from datetime import datetime
 
-from http.server import BaseHTTPRequestHandler, HTTPServer  # Importa as classes necessárias para criar um servidor HTTP
-
 class RequestHandler(BaseHTTPRequestHandler):  # Define a classe RequestHandler que herda de BaseHTTPRequestHandler
 
     def do_GET(self):  # Método chamado para processar requisições GET
@@ -96,7 +94,7 @@ class RequestHandler(BaseHTTPRequestHandler):  # Define a classe RequestHandler 
 
                 if 0 <= index < len(notas):  # Verifica se índice é válido
                     nota_editada['id'] = notas[index]['id']  # Adiciona ID da nota existente
-                    nota_editada['data'] = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")  # Adiciona data atual
+                    nota_editada['data'] = notas[index]['data']  # Mantém a data original da nota
 
                     notas[index] = nota_editada  # Atualiza nota no índice
 
@@ -118,7 +116,52 @@ class RequestHandler(BaseHTTPRequestHandler):  # Define a classe RequestHandler 
             self.send_response(404)  # Envia resposta 404 (Não encontrado)
             self.end_headers()
         
-        #print("Dados recebidos:", post_data)  # Adicione esta linha
+
+    def do_DELETE(self):
+        if self.path.startswith('/notas/'):  # Verifica se o caminho da requisição começa com '/notas/'
+            try:
+                nota_id = int(self.path.split('/')[-1])  # Obtém o ID da nota da URL, extraindo o último elemento após a barra
+                
+                with open('notas.json', 'r', encoding='utf-8') as file:  # Abre o arquivo notas.json para leitura
+                    notas = json.load(file)  # Carrega as notas existentes do arquivo JSON
+
+                # Encontra a nota que será apagada
+                nota_apagada = next((nota for nota in notas if nota['id'] == nota_id), None)  # Busca a nota a ser apagada
+
+                if nota_apagada:  # Verifica se a nota foi encontrada
+                    notas = [nota for nota in notas if nota['id'] != nota_id]  # Filtra as notas para remover a que possui o ID correspondente
+                    
+                    # Atualiza o arquivo notas.json
+                    with open('notas.json', 'w', encoding='utf-8') as file:  # Abre o arquivo notas.json para escrita
+                        json.dump(notas, file, ensure_ascii=False, indent=4)  # Salva as notas atualizadas (sem a nota removida) no arquivo JSON
+
+                    # Adiciona a nota apagada ao arquivo apagadas.json
+                    try:
+                        with open('apagadas.json', 'r', encoding='utf-8') as file:  # Tenta abrir apagadas.json para leitura
+                            apagadas = json.load(file)  # Carrega as notas apagadas existentes
+                    except FileNotFoundError:  # Se o arquivo não existir
+                        apagadas = []  # Inicializa uma nova lista
+
+                    apagadas.append(nota_apagada)  # Adiciona a nota apagada à lista de notas apagadas
+
+                    with open('apagadas.json', 'w', encoding='utf-8') as file:  # Abre o arquivo apagadas.json para escrita
+                        json.dump(apagadas, file, ensure_ascii=False, indent=4)  # Salva as notas apagadas no arquivo
+
+                    self.send_response(200)  # Envia uma resposta 200 (OK) ao cliente
+                    self.send_header('Content-Type', 'application/json')  # Define o tipo de conteúdo da resposta como JSON
+                    self.end_headers()  # Finaliza os cabeçalhos da resposta
+                    
+                    self.wfile.write(json.dumps({"message": "Nota apagada com sucesso!"}).encode('utf-8'))  # Envia uma mensagem de sucesso informando que a nota foi apagada
+                else:
+                    self.send_response(404)  # Se a nota não foi encontrada, envia uma resposta 404 (Não encontrado)
+                    self.end_headers()  # Finaliza os cabeçalhos da resposta
+            except Exception as e:  # Em caso de erro
+                self.send_response(500)  # Envia uma resposta 500 (Erro interno do servidor)
+                self.end_headers()  # Finaliza os cabeçalhos da resposta
+                self.wfile.write(json.dumps({"error": str(e)}).encode('utf-8'))  # Envia uma mensagem de erro em formato JSON
+        else:
+            self.send_response(404)  # Se o caminho não for encontrado, envia uma resposta 404 (Não encontrado)
+            self.end_headers()  # Finaliza os cabeçalhos da resposta
 
 
 def run(server_class=HTTPServer, handler_class=RequestHandler):  # Função para iniciar o servidor
