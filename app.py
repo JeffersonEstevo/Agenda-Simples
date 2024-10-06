@@ -70,6 +70,13 @@ class RequestHandler(BaseHTTPRequestHandler):  # Define a classe RequestHandler 
         else:  # Se a rota não corresponder a /notas
             self.send_response(404)  # Responde com status 404 (Not Found)
             self.end_headers()  # Finaliza os cabeçalhos da resposta
+    
+    def do_OPTIONS(self):
+            self.send_response(200)  # Responde com status 200 (OK)
+            self.send_header('Access-Control-Allow-Origin', '*')  # Permite acesso de qualquer origem
+            self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')  # Métodos permitidos
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type')  # Cabeçalhos permitidos
+            self.end_headers()  # Finaliza os cabeçalhos da resposta
 
 def run(server_class=HTTPServer, handler_class=RequestHandler):  # Função para iniciar o servidor
     server_address = ('', 8000)  # Define o endereço e a porta do servidor
