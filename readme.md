@@ -38,7 +38,7 @@ O projeto é estruturado em três componentes principais:
    `git clone https://github.com/JeffersonEstevo/Agenda-Simples.git`  
 
 2. Navegue até a pasta do projeto:
-   `cd gerenciador-anotacoes`
+   `cd Agenda-Simples`
 
 3. Inicie o servidor local (certifique-se de ter Python instalado):
    `python server.py`
