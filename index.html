@@ -15,10 +15,13 @@
         <label for="conteudo">Conteúdo</label>
         <textarea id="conteudo" placeholder="Digite o conteúdo da nota" required></textarea>
         
+        <!-- Campo oculto para armazenar o índice da nota -->
+        <input type="hidden" id="notaIndex" value="">
+
         <button id="salvar">Salvar Nota</button>
         <button id="exportar">Exportar Notas</button>
         
-        <label for="filtro">Filtrar</label>
+        <br><br><label for="filtro">Filtrar</label>
         <input type="text" id="filtro" placeholder="Filtrar..." oninput="filtrarNotas()">
         
         <div id="anotacoes"></div>
